@@ -1,0 +1,117 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    @apply border-gray-200 dark:border-dark-300;
+  }
+  html {
+    @apply scroll-smooth;
+  }
+  body {
+    @apply bg-surface-50 text-gray-900 dark:bg-dark-0 dark:text-gray-100 font-sans antialiased;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    @apply bg-transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply bg-gray-300 dark:bg-dark-400 rounded-full;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-gray-400 dark:bg-dark-500;
+  }
+}
+
+@layer components {
+  .card {
+    @apply bg-white dark:bg-dark-100 rounded-2xl border border-gray-100 dark:border-dark-300 shadow-card transition-all duration-200;
+  }
+  .card-hover {
+    @apply hover:shadow-card-hover hover:border-gray-200 dark:hover:border-dark-400 hover:-translate-y-0.5;
+  }
+  .glass {
+    @apply bg-white/70 dark:bg-dark-100/70 backdrop-blur-xl border border-white/20 dark:border-dark-300/50;
+  }
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 px-4 py-2.5 bg-brand-600 text-white font-medium rounded-xl
+    hover:bg-brand-700 active:bg-brand-800 transition-all duration-150 text-sm shadow-sm
+    focus:outline-none focus:ring-2 focus:ring-brand-500/40 focus:ring-offset-2 dark:focus:ring-offset-dark-100;
+  }
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-2 px-4 py-2.5 bg-white dark:bg-dark-200 text-gray-700 dark:text-gray-300
+    font-medium rounded-xl border border-gray-200 dark:border-dark-400
+    hover:bg-gray-50 dark:hover:bg-dark-300 active:bg-gray-100 dark:active:bg-dark-400 transition-all duration-150 text-sm
+    focus:outline-none focus:ring-2 focus:ring-gray-300/40 focus:ring-offset-2 dark:focus:ring-offset-dark-100;
+  }
+  .btn-ghost {
+    @apply inline-flex items-center justify-center gap-2 px-3 py-2 text-gray-600 dark:text-gray-400
+    font-medium rounded-xl hover:bg-gray-100 dark:hover:bg-dark-200 active:bg-gray-200 dark:active:bg-dark-300
+    transition-all duration-150 text-sm focus:outline-none;
+  }
+  .btn-danger {
+    @apply inline-flex items-center justify-center gap-2 px-4 py-2.5 bg-red-600 text-white font-medium rounded-xl
+    hover:bg-red-700 active:bg-red-800 transition-all duration-150 text-sm shadow-sm
+    focus:outline-none focus:ring-2 focus:ring-red-500/40 focus:ring-offset-2 dark:focus:ring-offset-dark-100;
+  }
+  .input-field {
+    @apply w-full px-3.5 py-2.5 bg-white dark:bg-dark-200 border border-gray-200 dark:border-dark-400
+    rounded-xl text-sm text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500
+    focus:outline-none focus:ring-2 focus:ring-brand-500/30 focus:border-brand-500 dark:focus:border-brand-500
+    transition-all duration-150;
+  }
+  .input-label {
+    @apply block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5;
+  }
+  .badge {
+    @apply inline-flex items-center px-2.5 py-1 rounded-lg text-xs font-medium;
+  }
+  .page-header {
+    @apply mb-8;
+  }
+  .page-title {
+    @apply text-2xl md:text-3xl font-bold text-gray-900 dark:text-gray-50;
+  }
+  .page-subtitle {
+    @apply text-sm md:text-base text-gray-500 dark:text-gray-400 mt-1;
+  }
+  .section-title {
+    @apply text-lg font-semibold text-gray-900 dark:text-gray-100;
+  }
+  .stat-number {
+    @apply text-3xl md:text-4xl font-bold tracking-tight;
+  }
+}
+
+/* Dialog overlay animation */
+[data-state="open"].dialog-overlay {
+  animation: overlayShow 150ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+[data-state="open"].dialog-content {
+  animation: contentShow 200ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes overlayShow {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes contentShow {
+  from { opacity: 0; transform: translate(-50%, -48%) scale(0.96); }
+  to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+}
+
+/* Progress bar animation */
+.progress-animate {
+  transition: width 0.6s ease-in-out;
+}
+
+/* Tab animations */
+[data-state="active"].tab-trigger {
+  @apply text-brand-700 dark:text-brand-400;
+}
