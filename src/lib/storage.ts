@@ -1,5 +1,5 @@
-// ============================================================
-// CogniOs localStorage Storage Engine — with migration support
+﻿// ============================================================
+// CogniOs localStorage Storage Engine â€” with migration support
 // ============================================================
 
 const STORAGE_PREFIX = 'cognios_';
@@ -48,7 +48,7 @@ function migrateData(): void {
 
   console.log(`[CogniOs] Migrating from schema v${currentVersion} to v${SCHEMA_VERSION}`);
 
-  // Migrate skills: old field names → new PRD names
+  // Migrate skills: old field names â†’ new PRD names
   const oldSkills = safeGet<any[]>(KEYS.skills, []);
   if (oldSkills.length > 0 && oldSkills[0].proficiencyLevel !== undefined) {
     const migrated = oldSkills.map((s: any) => {
@@ -83,7 +83,7 @@ function migrateData(): void {
     safeSet(KEYS.skills, migrated);
   }
 
-  // Migrate projects: stack → techStack
+  // Migrate projects: stack â†’ techStack
   const oldProjects = safeGet<any[]>(KEYS.projects, []);
   if (oldProjects.length > 0 && oldProjects[0].stack !== undefined) {
     const migrated = oldProjects.map((p: any) => ({
@@ -98,17 +98,17 @@ function migrateData(): void {
     safeSet(KEYS.projects, migrated);
   }
 
-  // Migrate academics: subject → subjectName
+  // Migrate academics: subjectName -> subject
   const oldAcademics = safeGet<any[]>(KEYS.academics, []);
-  if (oldAcademics.length > 0 && oldAcademics[0].subject !== undefined && oldAcademics[0].subjectName === undefined) {
+  if (oldAcademics.length > 0 && oldAcademics[0].subjectName !== undefined && oldAcademics[0].subject === undefined) {
     const migrated = oldAcademics.map((a: any) => ({
       ...a,
-      subjectName: a.subjectName || a.subject || '',
+      subject: a.subject || a.subjectName || '',
     }));
     safeSet(KEYS.academics, migrated);
   }
 
-  // Migrate resumes: jobRoleName → roleTitle, summary → targetSummary
+  // Migrate resumes: jobRoleName â†’ roleTitle, summary â†’ targetSummary
   const oldResumes = safeGet<any[]>(KEYS.resumes, []);
   if (oldResumes.length > 0 && oldResumes[0].jobRoleName !== undefined) {
     const migrated = oldResumes.map((r: any) => ({
@@ -122,7 +122,7 @@ function migrateData(): void {
     safeSet(KEYS.resumes, migrated);
   }
 
-  // Migrate library: keyTakeawaysMarkdown → takeawaysMarkdown, status mapping
+  // Migrate library: keyTakeawaysMarkdown â†’ takeawaysMarkdown, status mapping
   const oldLibrary = safeGet<any[]>(KEYS.library, []);
   if (oldLibrary.length > 0) {
     const migrated = oldLibrary.map((l: any) => ({
@@ -197,3 +197,4 @@ export const storage = {
 };
 
 export default storage;
+

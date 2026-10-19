@@ -1,5 +1,5 @@
-// ============================================================
-// CogniOs Type Definitions — aligned with PRD
+﻿// ============================================================
+// CogniOs Type Definitions - aligned with PRD
 // ============================================================
 
 export type ProficiencyLevel = 'Beginner' | 'Intermediate' | 'Mastered';
@@ -17,7 +17,6 @@ export interface Skill {
   };
   proofOfWorkUrl?: string;
   liveUrl?: string;
-  // Preserved extra fields from existing implementation
   learningNotes?: string;
   relatedProjectIds?: string[];
   relatedCourseIds?: string[];
@@ -32,7 +31,6 @@ export interface Project {
   techStack: string[];
   githubUrl?: string;
   liveUrl?: string;
-  // Preserved extras
   problem?: string;
   solution?: string;
   architecture?: string;
@@ -43,7 +41,7 @@ export interface Project {
   updatedAt: string;
 }
 
-export type CourseStatus = 'Not Started' | 'In Progress' | 'Completed';
+export type CourseStatus = 'Not Started' | 'In Progress' | 'Completed' | 'Paused';
 
 export interface Course {
   id: string;
@@ -53,8 +51,8 @@ export interface Course {
   status: CourseStatus;
   certificateUrl?: string;
   courseUrl?: string;
-  // Preserved extras
   instructor?: string;
+  type?: string;
   totalDuration?: string;
   completedDuration?: string;
   lastStudied?: string;
@@ -62,18 +60,22 @@ export interface Course {
   updatedAt: string;
 }
 
+export type AcademicStatus = 'Completed' | 'In Progress' | 'Upcoming';
+
 export interface AcademicSubject {
   id: string;
   semester: number;
-  subjectName: string;
+  subject: string;
   credits: number;
   grade: string;
-  // Preserved extras
-  score?: number;
-  status?: 'Completed' | 'In Progress' | 'Upcoming';
+  score: number;
+  status: AcademicStatus;
   createdAt: string;
   updatedAt: string;
 }
+
+// Alias for backward compatibility
+export type AcademicRecord = AcademicSubject;
 
 export interface ResumeProfile {
   id: string;
@@ -88,6 +90,7 @@ export interface ResumeProfile {
 }
 
 export type LibraryStatus = 'Queued' | 'Reading' | 'Finished';
+export type LibraryCategory = 'Books' | 'Documentation' | 'Technical Notes' | 'Interview Q&A' | 'Code Snippets' | 'Architecture' | 'AI Notes' | 'Learning Notes';
 
 export interface LibraryItem {
   id: string;
@@ -96,9 +99,8 @@ export interface LibraryItem {
   status: LibraryStatus;
   resourceUrl?: string;
   takeawaysMarkdown: string;
-  // Preserved extras for rich library
   category?: string;
-  tags?: string[];
+  tags: string[];
   importantConcepts?: string;
   codeSnippets?: string;
   interviewQuestions?: string;

@@ -1,5 +1,5 @@
-// ============================================================
-// CogniOs Seed Data — Realistic Java Full Stack Developer Profile
+﻿// ============================================================
+// CogniOs Seed Data â€” Realistic Java Full Stack Developer Profile
 // Aligned with PRD types
 // ============================================================
 
@@ -247,7 +247,7 @@ export const seedProjects: Project[] = [
     solution: 'Built a platform matching riders with similar routes, featuring real-time notifications, driver verification, and automated fare splitting.',
     architecture: 'Spring Boot REST API backend with PostgreSQL, React SPA frontend, JWT authentication, WebSocket for real-time updates.',
     features: 'User registration, ride matching algorithm, route mapping, payment integration, rating system, admin dashboard',
-    role: 'Full Stack Developer — designed architecture, built REST APIs, implemented frontend, deployed with Docker',
+    role: 'Full Stack Developer â€” designed architecture, built REST APIs, implemented frontend, deployed with Docker',
     featured: true,
     createdAt: daysAgo(60), updatedAt: daysAgo(3),
   },
@@ -262,7 +262,7 @@ export const seedProjects: Project[] = [
     solution: 'Created a premium SaaS-style application that serves as a personal operating system for career development.',
     architecture: 'React SPA with TypeScript, Tailwind CSS design system, localStorage persistence, planned Spring Boot + PostgreSQL migration.',
     features: 'Skills tracking with playbook, academic GPA calculator, course progress tracker, project portfolio, resume builder, knowledge library',
-    role: 'Solo Developer — designed, built, and deployed the entire application',
+    role: 'Solo Developer â€” designed, built, and deployed the entire application',
     featured: true,
     createdAt: daysAgo(30), updatedAt: daysAgo(1),
   },
@@ -312,9 +312,9 @@ export const seedCourses: Course[] = [
   },
   {
     id: 'cr-004',
-    title: 'React — The Complete Guide',
+    title: 'React â€” The Complete Guide',
     platform: 'Udemy',
-    instructor: 'Maximilian Schwarzmüller',
+    instructor: 'Maximilian SchwarzmÃ¼ller',
     progressPercentage: 50,
     status: 'In Progress',
     totalDuration: '48 hours',
@@ -328,25 +328,25 @@ export const seedCourses: Course[] = [
 
 export const seedAcademics: AcademicSubject[] = [
   // Semester 1
-  { id: 'ac-001', semester: 1, subjectName: 'Mathematics I', credits: 4, grade: 'A', score: 9, status: 'Completed', createdAt: daysAgo(300), updatedAt: daysAgo(300) },
-  { id: 'ac-002', semester: 1, subjectName: 'Physics', credits: 4, grade: 'A', score: 8.5, status: 'Completed', createdAt: daysAgo(300), updatedAt: daysAgo(300) },
-  { id: 'ac-003', semester: 1, subjectName: 'Programming Fundamentals', credits: 3, grade: 'A+', score: 9.5, status: 'Completed', createdAt: daysAgo(300), updatedAt: daysAgo(300) },
-  { id: 'ac-004', semester: 1, subjectName: 'English Communication', credits: 2, grade: 'B+', score: 7.5, status: 'Completed', createdAt: daysAgo(300), updatedAt: daysAgo(300) },
+  { id: 'ac-001', semester: 1, subject: 'Mathematics I', credits: 4, grade: 'A', score: 9, status: 'Completed', createdAt: daysAgo(300), updatedAt: daysAgo(300) },
+  { id: 'ac-002', semester: 1, subject: 'Physics', credits: 4, grade: 'A', score: 8.5, status: 'Completed', createdAt: daysAgo(300), updatedAt: daysAgo(300) },
+  { id: 'ac-003', semester: 1, subject: 'Programming Fundamentals', credits: 3, grade: 'A+', score: 9.5, status: 'Completed', createdAt: daysAgo(300), updatedAt: daysAgo(300) },
+  { id: 'ac-004', semester: 1, subject: 'English Communication', credits: 2, grade: 'B+', score: 7.5, status: 'Completed', createdAt: daysAgo(300), updatedAt: daysAgo(300) },
   // Semester 2
-  { id: 'ac-005', semester: 2, subjectName: 'Mathematics II', credits: 4, grade: 'A', score: 8.5, status: 'Completed', createdAt: daysAgo(250), updatedAt: daysAgo(250) },
-  { id: 'ac-006', semester: 2, subjectName: 'Data Structures', credits: 4, grade: 'A+', score: 9.5, status: 'Completed', createdAt: daysAgo(250), updatedAt: daysAgo(250) },
-  { id: 'ac-007', semester: 2, subjectName: 'Digital Electronics', credits: 3, grade: 'B+', score: 7, status: 'Completed', createdAt: daysAgo(250), updatedAt: daysAgo(250) },
+  { id: 'ac-005', semester: 2, subject: 'Mathematics II', credits: 4, grade: 'A', score: 8.5, status: 'Completed', createdAt: daysAgo(250), updatedAt: daysAgo(250) },
+  { id: 'ac-006', semester: 2, subject: 'Data Structures', credits: 4, grade: 'A+', score: 9.5, status: 'Completed', createdAt: daysAgo(250), updatedAt: daysAgo(250) },
+  { id: 'ac-007', semester: 2, subject: 'Digital Electronics', credits: 3, grade: 'B+', score: 7, status: 'Completed', createdAt: daysAgo(250), updatedAt: daysAgo(250) },
   // Semester 3
-  { id: 'ac-008', semester: 3, subjectName: 'Object-Oriented Programming', credits: 4, grade: 'A+', score: 9.5, status: 'Completed', createdAt: daysAgo(200), updatedAt: daysAgo(200) },
-  { id: 'ac-009', semester: 3, subjectName: 'Database Management Systems', credits: 4, grade: 'A', score: 9, status: 'Completed', createdAt: daysAgo(200), updatedAt: daysAgo(200) },
-  { id: 'ac-010', semester: 3, subjectName: 'Computer Networks', credits: 3, grade: 'B+', score: 7.5, status: 'Completed', createdAt: daysAgo(200), updatedAt: daysAgo(200) },
+  { id: 'ac-008', semester: 3, subject: 'Object-Oriented Programming', credits: 4, grade: 'A+', score: 9.5, status: 'Completed', createdAt: daysAgo(200), updatedAt: daysAgo(200) },
+  { id: 'ac-009', semester: 3, subject: 'Database Management Systems', credits: 4, grade: 'A', score: 9, status: 'Completed', createdAt: daysAgo(200), updatedAt: daysAgo(200) },
+  { id: 'ac-010', semester: 3, subject: 'Computer Networks', credits: 3, grade: 'B+', score: 7.5, status: 'Completed', createdAt: daysAgo(200), updatedAt: daysAgo(200) },
   // Semester 4
-  { id: 'ac-011', semester: 4, subjectName: 'Operating Systems', credits: 4, grade: 'A', score: 8.5, status: 'Completed', createdAt: daysAgo(150), updatedAt: daysAgo(150) },
-  { id: 'ac-012', semester: 4, subjectName: 'Algorithms', credits: 4, grade: 'A', score: 9, status: 'Completed', createdAt: daysAgo(150), updatedAt: daysAgo(150) },
-  { id: 'ac-013', semester: 4, subjectName: 'Software Engineering', credits: 3, grade: 'A+', score: 9.5, status: 'Completed', createdAt: daysAgo(150), updatedAt: daysAgo(150) },
+  { id: 'ac-011', semester: 4, subject: 'Operating Systems', credits: 4, grade: 'A', score: 8.5, status: 'Completed', createdAt: daysAgo(150), updatedAt: daysAgo(150) },
+  { id: 'ac-012', semester: 4, subject: 'Algorithms', credits: 4, grade: 'A', score: 9, status: 'Completed', createdAt: daysAgo(150), updatedAt: daysAgo(150) },
+  { id: 'ac-013', semester: 4, subject: 'Software Engineering', credits: 3, grade: 'A+', score: 9.5, status: 'Completed', createdAt: daysAgo(150), updatedAt: daysAgo(150) },
   // Semester 5
-  { id: 'ac-014', semester: 5, subjectName: 'Web Technologies', credits: 4, grade: '', score: 0, status: 'In Progress', createdAt: daysAgo(30), updatedAt: daysAgo(5) },
-  { id: 'ac-015', semester: 5, subjectName: 'Machine Learning', credits: 3, grade: '', score: 0, status: 'In Progress', createdAt: daysAgo(30), updatedAt: daysAgo(5) },
+  { id: 'ac-014', semester: 5, subject: 'Web Technologies', credits: 4, grade: '', score: 0, status: 'In Progress', createdAt: daysAgo(30), updatedAt: daysAgo(5) },
+  { id: 'ac-015', semester: 5, subject: 'Machine Learning', credits: 3, grade: '', score: 0, status: 'In Progress', createdAt: daysAgo(30), updatedAt: daysAgo(5) },
 ];
 
 export const seedResumes: ResumeProfile[] = [
@@ -412,7 +412,7 @@ export const seedLibrary: LibraryItem[] = [
     author: 'Personal Notes',
     status: 'Reading',
     resourceUrl: 'https://takeuforward.org',
-    takeawaysMarkdown: `## Must-Know Patterns\n\n1. **Two Pointers**: Array/String problems\n2. **Sliding Window**: Subarray/Substring problems\n3. **Binary Search**: Sorted data, search space reduction\n4. **BFS/DFS**: Tree/Graph traversal\n5. **Dynamic Programming**: Overlapping subproblems\n\n## Time Complexity Cheat Sheet\n\n| Algorithm | Best | Worst |\n|-----------|------|-------|\n| Binary Search | O(log n) | O(log n) |\n| Merge Sort | O(n log n) | O(n log n) |\n| Quick Sort | O(n log n) | O(n²) |`,
+    takeawaysMarkdown: `## Must-Know Patterns\n\n1. **Two Pointers**: Array/String problems\n2. **Sliding Window**: Subarray/Substring problems\n3. **Binary Search**: Sorted data, search space reduction\n4. **BFS/DFS**: Tree/Graph traversal\n5. **Dynamic Programming**: Overlapping subproblems\n\n## Time Complexity Cheat Sheet\n\n| Algorithm | Best | Worst |\n|-----------|------|-------|\n| Binary Search | O(log n) | O(log n) |\n| Merge Sort | O(n log n) | O(n log n) |\n| Quick Sort | O(n log n) | O(nÂ²) |`,
     category: 'Technical Notes',
     tags: ['DSA', 'Interview', 'Algorithms'],
     createdAt: daysAgo(15), updatedAt: daysAgo(1),
@@ -445,6 +445,7 @@ export const seedActivity: ActivityItem[] = [
 
 export const seedNotifications: Notification[] = [
   { id: 'not-001', title: 'Welcome to CogniOs', message: 'Your personal developer OS is ready. Start tracking your skills!', read: false, timestamp: daysAgo(0), type: 'info' },
-  { id: 'not-002', title: 'Course Milestone', message: 'Java Full Stack Development is 65% complete — keep going!', read: false, timestamp: daysAgo(2), type: 'success' },
+  { id: 'not-002', title: 'Course Milestone', message: 'Java Full Stack Development is 65% complete â€” keep going!', read: false, timestamp: daysAgo(2), type: 'success' },
   { id: 'not-003', title: 'New Skill Added', message: 'LangChain4j has been added to your AI toolkit.', read: true, timestamp: daysAgo(10), type: 'info' },
 ];
+

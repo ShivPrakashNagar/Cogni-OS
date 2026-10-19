@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { useApp } from '@/App';
 import type { ResumeProfile } from '@/types';
@@ -83,9 +83,9 @@ export default function Resume() {
 
                 <div className="flex flex-wrap gap-2 text-xs text-gray-500 dark:text-gray-400 mb-4">
                   <span>{selSkills.length} skills</span>
-                  <span>·</span>
+                  <span>Â·</span>
                   <span>{selProjects.length} projects</span>
-                  <span>·</span>
+                  <span>Â·</span>
                   <span>{selCourses.length + (selSubjects?.length || 0)} edu items</span>
                 </div>
 
@@ -168,10 +168,10 @@ function ATSResume({ resume }: { resume: ResumeProfile }) {
         <p className="text-gray-700 font-medium">{resume.roleTitle}</p>
         <div className="text-[9pt] text-gray-600 mt-2 flex flex-wrap items-center justify-center gap-2 sm:gap-4">
           {profile.email && <span>{profile.email}</span>}
-          {profile.phone && <span>• {profile.phone}</span>}
-          {profile.linkedin && <span>• {profile.linkedin}</span>}
-          {profile.github && <span>• {profile.github}</span>}
-          {profile.portfolio && <span>• {profile.portfolio}</span>}
+          {profile.phone && <span>â€¢ {profile.phone}</span>}
+          {profile.linkedin && <span>â€¢ {profile.linkedin}</span>}
+          {profile.github && <span>â€¢ {profile.github}</span>}
+          {profile.portfolio && <span>â€¢ {profile.portfolio}</span>}
         </div>
       </div>
 
@@ -229,13 +229,13 @@ function ATSResume({ resume }: { resume: ResumeProfile }) {
           <div className="space-y-2 text-gray-800">
             {selSubjects.map((s) => (
               <div key={s.id} className="flex justify-between">
-                <span><span className="font-semibold">{s.subjectName}</span> (Semester {s.semester})</span>
+                <span><span className="font-semibold">{s.subject}</span> (Semester {s.semester})</span>
                 {s.grade && <span className="font-medium">Grade: {s.grade}</span>}
               </div>
             ))}
             {selCourses.map((c) => (
               <div key={c.id} className="flex justify-between">
-                <span><span className="font-semibold">{c.title}</span> — {c.platform}</span>
+                <span><span className="font-semibold">{c.title}</span> â€” {c.platform}</span>
                 {c.courseUrl && <a href={c.courseUrl} className="text-[9pt] text-gray-600 hover:underline">Link</a>}
               </div>
             ))}
@@ -327,7 +327,7 @@ function ResumeFormModal({ open, onClose, resume, onSave, skills, projects, cour
               {academics.map((a) => (
                 <label key={a.id} className="flex items-center gap-2 text-sm cursor-pointer hover:bg-white dark:hover:bg-dark-300 px-2 py-1.5 rounded-lg transition-colors">
                   <input type="checkbox" checked={(form.selectedSubjectIds || []).includes(a.id)} onChange={() => toggleItem('selectedSubjectIds', a.id)} className="w-3.5 h-3.5 rounded accent-brand-600" />
-                  <span className="text-gray-700 dark:text-gray-300 truncate">{a.subjectName}</span>
+                  <span className="text-gray-700 dark:text-gray-300 truncate">{a.subject}</span>
                 </label>
               ))}
             </div>
@@ -342,3 +342,4 @@ function ResumeFormModal({ open, onClose, resume, onSave, skills, projects, cour
     </Modal>
   );
 }
+

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { useApp } from '@/App';
 import type { LibraryItem, LibraryStatus, LibraryCategory } from '@/types';
@@ -28,7 +28,7 @@ export default function LibraryPage() {
   }, [searchParams, setSearchParams]);
 
   const filtered = library.filter((item) => {
-    if (search && !item.title.toLowerCase().includes(search.toLowerCase()) && !item.tags.some((t) => t.toLowerCase().includes(search.toLowerCase()))) return false;
+    if (search && !item.title.toLowerCase().includes(search.toLowerCase()) && !(item.tags || []).some((t) => t.toLowerCase().includes(search.toLowerCase()))) return false;
     if (catFilter !== 'All' && item.category !== catFilter) return false;
     if (statusFilter !== 'All' && item.status !== statusFilter) return false;
     return true;
@@ -72,7 +72,7 @@ export default function LibraryPage() {
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
           <h1 className="page-title">Knowledge Library</h1>
-          <p className="page-subtitle">Your second brain — books, notes, snippets, and interview prep.</p>
+          <p className="page-subtitle">Your second brain â€” books, notes, snippets, and interview prep.</p>
         </div>
         <button onClick={() => setAddOpen(true)} className="btn-primary self-start">
           <Plus className="w-4 h-4" /> Add Item
@@ -110,7 +110,7 @@ export default function LibraryPage() {
               {item.author && <p className="text-xs text-gray-500 dark:text-gray-400 mb-2">by {item.author}</p>}
               <span className="badge bg-gray-100 dark:bg-dark-300 text-gray-600 dark:text-gray-400 text-[10px] w-fit mb-3">{item.category}</span>
 
-              {item.tags.length > 0 && (
+              {(item.tags || []).length > 0 && (
                 <div className="flex flex-wrap gap-1.5 mb-3">
                   {item.tags.slice(0, 4).map((tag) => (
                     <span key={tag} className="px-2 py-0.5 text-[10px] font-medium rounded-md bg-brand-50 dark:bg-brand-950/30 text-brand-700 dark:text-brand-400">
@@ -210,7 +210,7 @@ function LibraryFormModal({ open, onClose, item, onSave }: {
   const [tagsInput, setTagsInput] = useState('');
 
   useEffect(() => {
-    if (item) { setForm({ ...item }); setTagsInput(item.tags.join(', ')); }
+    if (item) { setForm({ ...item }); setTagsInput((item.tags || []).join(', ')); }
     else { setForm({ category: 'Technical Notes', status: 'Queued', tags: [] }); setTagsInput(''); }
   }, [item, open]);
 
@@ -281,3 +281,4 @@ function LibraryFormModal({ open, onClose, item, onSave }: {
     </Modal>
   );
 }
+
