@@ -1,9 +1,9 @@
 ﻿// ============================================================
-// CogniOs localStorage Storage Engine â€” with migration support
+// CogniOs localStorage Storage Engine — with multi-user isolation
 // ============================================================
 
 const STORAGE_PREFIX = 'cognios_';
-const SCHEMA_VERSION = 2; // Bumped for PRD alignment
+const SCHEMA_VERSION = 3;
 
 const KEYS = {
   skills: `${STORAGE_PREFIX}skills`,
@@ -18,6 +18,8 @@ const KEYS = {
   profile: `${STORAGE_PREFIX}profile`,
   initialized: `${STORAGE_PREFIX}initialized`,
   schemaVersion: `${STORAGE_PREFIX}schema_version`,
+  usersDb: `${STORAGE_PREFIX}users_db`,
+  activeSession: `${STORAGE_PREFIX}auth_session`,
 } as const;
 
 export { KEYS };
@@ -41,120 +43,45 @@ function safeSet<T>(key: string, value: T): void {
   }
 }
 
-// Migration: convert old schema to new PRD-aligned schema
-function migrateData(): void {
-  const currentVersion = safeGet<number>(KEYS.schemaVersion, 1);
-  if (currentVersion >= SCHEMA_VERSION) return;
+// User-scoped keys for data isolation
+export function getUserScopedKey(baseKey: string, userId: string): string {
+  return `${baseKey}_${userId}`;
+}
 
-  console.log(`[CogniOs] Migrating from schema v${currentVersion} to v${SCHEMA_VERSION}`);
-
-  // Migrate skills: old field names â†’ new PRD names
-  const oldSkills = safeGet<any[]>(KEYS.skills, []);
-  if (oldSkills.length > 0 && oldSkills[0].proficiencyLevel !== undefined) {
-    const migrated = oldSkills.map((s: any) => {
-      // Map old categories to new
-      let category = s.category;
-      if (category === 'Databases & DevOps') category = 'Database/DevOps';
-      if (category === 'AI & Tools') category = 'AI';
-      if (category === 'Soft Skills') category = 'Full Stack';
-
-      // Map proficiency
-      let proficiency = s.proficiencyLevel || s.proficiency || 'Beginner';
-      if (proficiency === 'Production Ready') proficiency = 'Mastered';
-
-      return {
-        ...s,
-        category,
-        proficiency,
-        playbook: s.playbook || {
-          bestFor: s.bestFor || '',
-          tradeoffs: s.tradeOffs || s.tradeoffs || '',
-          alternatives: s.alternatives || '',
-        },
-        proofOfWorkUrl: s.proofOfWorkUrl || s.proofOfWork || s.repoUrl || '',
-        // Remove old fields
-        proficiencyLevel: undefined,
-        bestFor: undefined,
-        tradeOffs: undefined,
-        repoUrl: undefined,
-        proofOfWork: undefined,
-      };
-    });
-    safeSet(KEYS.skills, migrated);
+export function getUserScoped<T>(baseKey: string, userId: string, fallback: T): T {
+  const userKey = getUserScopedKey(baseKey, userId);
+  const raw = localStorage.getItem(userKey);
+  if (raw !== null) {
+    try {
+      return JSON.parse(raw) as T;
+    } catch {
+      return fallback;
+    }
   }
 
-  // Migrate projects: stack â†’ techStack
-  const oldProjects = safeGet<any[]>(KEYS.projects, []);
-  if (oldProjects.length > 0 && oldProjects[0].stack !== undefined) {
-    const migrated = oldProjects.map((p: any) => ({
-      ...p,
-      techStack: p.techStack || p.stack || [],
-      githubUrl: p.githubUrl || '',
-      liveUrl: p.liveUrl || '',
-      stack: undefined,
-      status: undefined,
-      progress: undefined,
-    }));
-    safeSet(KEYS.projects, migrated);
+  // Fallback to global key for demo user backward compatibility
+  if (userId === 'user-shiv-demo') {
+    return safeGet<T>(baseKey, fallback);
   }
 
-  // Migrate academics: subjectName -> subject
-  const oldAcademics = safeGet<any[]>(KEYS.academics, []);
-  if (oldAcademics.length > 0 && oldAcademics[0].subjectName !== undefined && oldAcademics[0].subject === undefined) {
-    const migrated = oldAcademics.map((a: any) => ({
-      ...a,
-      subject: a.subject || a.subjectName || '',
-    }));
-    safeSet(KEYS.academics, migrated);
+  return fallback;
+}
+
+export function setUserScoped<T>(baseKey: string, userId: string, value: T): void {
+  const userKey = getUserScopedKey(baseKey, userId);
+  safeSet(userKey, value);
+
+  // Keep global key updated for demo user backward compatibility
+  if (userId === 'user-shiv-demo') {
+    safeSet(baseKey, value);
   }
-
-  // Migrate resumes: jobRoleName â†’ roleTitle, summary â†’ targetSummary
-  const oldResumes = safeGet<any[]>(KEYS.resumes, []);
-  if (oldResumes.length > 0 && oldResumes[0].jobRoleName !== undefined) {
-    const migrated = oldResumes.map((r: any) => ({
-      ...r,
-      roleTitle: r.roleTitle || r.jobRoleName || '',
-      targetSummary: r.targetSummary || r.summary || '',
-      selectedSubjectIds: r.selectedSubjectIds || [],
-      jobRoleName: undefined,
-      summary: undefined,
-    }));
-    safeSet(KEYS.resumes, migrated);
-  }
-
-  // Migrate library: keyTakeawaysMarkdown â†’ takeawaysMarkdown, status mapping
-  const oldLibrary = safeGet<any[]>(KEYS.library, []);
-  if (oldLibrary.length > 0) {
-    const migrated = oldLibrary.map((l: any) => ({
-      ...l,
-      takeawaysMarkdown: l.takeawaysMarkdown || l.keyTakeawaysMarkdown || '',
-      status: l.status === 'Want to Read' ? 'Queued' : l.status,
-    }));
-    safeSet(KEYS.library, migrated);
-  }
-
-  // Migrate profile: add new fields
-  const oldProfile = safeGet<any>(KEYS.profile, null);
-  if (oldProfile && oldProfile.github === undefined) {
-    safeSet(KEYS.profile, {
-      ...oldProfile,
-      github: oldProfile.github || '',
-      linkedin: oldProfile.linkedin || '',
-      portfolio: oldProfile.portfolio || '',
-      phone: oldProfile.phone || '',
-    });
-  }
-
-  // Remove old AI tools key
-  localStorage.removeItem(`${STORAGE_PREFIX}ai_tools`);
-
-  safeSet(KEYS.schemaVersion, SCHEMA_VERSION);
-  console.log('[CogniOs] Migration complete.');
 }
 
 export const storage = {
   get: safeGet,
   set: safeSet,
+  getUserScoped,
+  setUserScoped,
   remove: (key: string) => localStorage.removeItem(key),
   clear: () => {
     Object.values(KEYS).forEach((key) => localStorage.removeItem(key));
@@ -165,17 +92,16 @@ export const storage = {
   markInitialized: () => {
     safeSet(KEYS.initialized, true);
   },
-  migrate: migrateData,
-  exportAll: (): string => {
+  exportAll: (userId?: string): string => {
     const data: Record<string, unknown> = {};
     Object.entries(KEYS).forEach(([name, key]) => {
       if (name !== 'initialized' && name !== 'schemaVersion') {
-        data[name] = safeGet(key, null);
+        data[name] = userId ? getUserScoped(key, userId, null) : safeGet(key, null);
       }
     });
     return JSON.stringify(data, null, 2);
   },
-  importAll: (jsonString: string): boolean => {
+  importAll: (jsonString: string, userId?: string): boolean => {
     try {
       const data = JSON.parse(jsonString);
       if (typeof data !== 'object' || data === null) {
@@ -183,11 +109,14 @@ export const storage = {
       }
       Object.entries(KEYS).forEach(([name, key]) => {
         if (name !== 'initialized' && name !== 'schemaVersion' && data[name] !== undefined) {
-          safeSet(key, data[name]);
+          if (userId) {
+            setUserScoped(key, userId, data[name]);
+          } else {
+            safeSet(key, data[name]);
+          }
         }
       });
       safeSet(KEYS.initialized, true);
-      safeSet(KEYS.schemaVersion, SCHEMA_VERSION);
       return true;
     } catch {
       return false;
@@ -197,4 +126,3 @@ export const storage = {
 };
 
 export default storage;
-

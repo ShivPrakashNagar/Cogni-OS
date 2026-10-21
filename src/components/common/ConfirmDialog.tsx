@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import Modal from './Modal';
 import { AlertTriangle } from 'lucide-react';
 
@@ -22,9 +22,9 @@ export default function ConfirmDialog({
           <AlertTriangle className={`w-6 h-6 ${destructive ? 'text-red-600 dark:text-red-400' : 'text-amber-600 dark:text-amber-400'}`} />
         </div>
         <p className="text-sm text-gray-600 dark:text-gray-400 max-w-sm">{message}</p>
-        <div className="flex items-center gap-3 mt-2">
-          <button onClick={onClose} className="btn-secondary">Cancel</button>
-          <button onClick={() => { onConfirm(); onClose(); }} className={destructive ? 'btn-danger' : 'btn-primary'}>
+        <div className="flex flex-col-reverse sm:flex-row items-stretch sm:items-center justify-center gap-2.5 mt-2 w-full sm:w-auto">
+          <button type="button" onClick={onClose} className="btn-secondary w-full sm:w-auto">Cancel</button>
+          <button type="button" onClick={() => { onConfirm(); onClose(); }} className={`${destructive ? 'btn-danger' : 'btn-primary'} w-full sm:w-auto`}>
             {confirmLabel}
           </button>
         </div>

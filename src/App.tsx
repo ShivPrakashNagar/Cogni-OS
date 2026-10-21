@@ -1,10 +1,13 @@
-import React, { createContext, useContext, lazy, Suspense } from 'react';
+﻿import React, { createContext, useContext, lazy, Suspense } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { useAppState, type AppState } from '@/hooks/useAppState';
 import Layout from '@/components/layout/Layout';
 import ToastContainer from '@/components/common/ToastContainer';
+import ProtectedRoute from '@/components/auth/ProtectedRoute';
 
+const Login = lazy(() => import('@/pages/Login'));
 const Dashboard = lazy(() => import('@/pages/Dashboard'));
+const Settings = lazy(() => import('@/pages/Settings'));
 const Skills = lazy(() => import('@/pages/Skills'));
 const Academics = lazy(() => import('@/pages/Academics'));
 const ProjectsResumes = lazy(() => import('@/pages/ProjectsResumes'));
@@ -34,24 +37,40 @@ export default function App() {
 
   return (
     <AppContext.Provider value={appState}>
-      <Layout>
-        <Suspense fallback={<PageLoader />}>
-          <Routes>
-            <Route path="/" element={<Navigate to="/dashboard" replace />} />
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/skills" element={<Skills />} />
-            <Route path="/academics" element={<Academics />} />
-            <Route path="/projects-resumes" element={<ProjectsResumes />} />
-            <Route path="/library" element={<Library />} />
-            {/* Redirect old routes for backward compatibility */}
-            <Route path="/projects" element={<Navigate to="/projects-resumes" replace />} />
-            <Route path="/resume" element={<Navigate to="/projects-resumes" replace />} />
-            <Route path="/courses" element={<Navigate to="/academics" replace />} />
-            <Route path="/settings" element={<Navigate to="/dashboard" replace />} />
-            <Route path="*" element={<Navigate to="/dashboard" replace />} />
-          </Routes>
-        </Suspense>
-      </Layout>
+      <Suspense fallback={<PageLoader />}>
+        <Routes>
+          {/* Public Authentication Route */}
+          <Route path="/login" element={<Login />} />
+
+          {/* Protected Application Routes wrapped with Layout */}
+          <Route
+            path="/*"
+            element={
+              <ProtectedRoute>
+                <Layout>
+                  <Routes>
+                    <Route path="/" element={<Navigate to="/dashboard" replace />} />
+                    <Route path="/dashboard" element={<Dashboard />} />
+                    <Route path="/skills" element={<Skills />} />
+                    <Route path="/academics" element={<Academics />} />
+                    <Route path="/projects-resumes" element={<ProjectsResumes />} />
+                    <Route path="/library" element={<Library />} />
+                    <Route path="/settings" element={<Settings />} />
+                    <Route path="/profile" element={<Navigate to="/settings" replace />} />
+
+                    {/* Backward compatibility redirects */}
+                    <Route path="/projects" element={<Navigate to="/projects-resumes" replace />} />
+                    <Route path="/resume" element={<Navigate to="/projects-resumes?tab=resume" replace />} />
+                    <Route path="/courses" element={<Navigate to="/academics?tab=courses" replace />} />
+
+                    <Route path="*" element={<Navigate to="/dashboard" replace />} />
+                  </Routes>
+                </Layout>
+              </ProtectedRoute>
+            }
+          />
+        </Routes>
+      </Suspense>
       <ToastContainer toasts={appState.toasts} />
     </AppContext.Provider>
   );

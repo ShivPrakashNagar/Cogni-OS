@@ -109,7 +109,7 @@ export interface LibraryItem {
   updatedAt: string;
 }
 
-export type ActivityType = 'skill' | 'project' | 'course' | 'academic' | 'resume' | 'library' | 'settings';
+export type ActivityType = 'skill' | 'project' | 'course' | 'academic' | 'resume' | 'library' | 'settings' | 'auth';
 
 export interface ActivityItem {
   id: string;
@@ -143,4 +143,29 @@ export interface UserProfile {
   linkedin?: string;
   portfolio?: string;
   phone?: string;
+}
+
+// ============================================================
+// Authentication & Security Types
+// ============================================================
+
+export interface UserAccount {
+  id: string;
+  name: string;
+  email: string;
+  passwordHash: string;
+  title: string;
+  avatarInitials: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface AuthSession {
+  userId: string;
+  email: string;
+  name: string;
+  title: string;
+  avatarInitials: string;
+  token: string;
+  loginAt: string;
 }

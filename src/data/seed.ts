@@ -412,7 +412,7 @@ export const seedLibrary: LibraryItem[] = [
     author: 'Personal Notes',
     status: 'Reading',
     resourceUrl: 'https://takeuforward.org',
-    takeawaysMarkdown: `## Must-Know Patterns\n\n1. **Two Pointers**: Array/String problems\n2. **Sliding Window**: Subarray/Substring problems\n3. **Binary Search**: Sorted data, search space reduction\n4. **BFS/DFS**: Tree/Graph traversal\n5. **Dynamic Programming**: Overlapping subproblems\n\n## Time Complexity Cheat Sheet\n\n| Algorithm | Best | Worst |\n|-----------|------|-------|\n| Binary Search | O(log n) | O(log n) |\n| Merge Sort | O(n log n) | O(n log n) |\n| Quick Sort | O(n log n) | O(nÂ²) |`,
+    takeawaysMarkdown: `## Must-Know Patterns\n\n1. **Two Pointers**: Array/String problems\n2. **Sliding Window**: Subarray/Substring problems\n3. **Binary Search**: Sorted data, search space reduction\n4. **BFS/DFS**: Tree/Graph traversal\n5. **Dynamic Programming**: Overlapping subproblems\n\n## Time Complexity Cheat Sheet\n\n| Algorithm | Best | Worst |\n|-----------|------|-------|\n| Binary Search | O(log n) | O(log n) |\n| Merge Sort | O(n log n) | O(n log n) |\n| Quick Sort | O(n log n) | O(n²) |`,
     category: 'Technical Notes',
     tags: ['DSA', 'Interview', 'Algorithms'],
     createdAt: daysAgo(15), updatedAt: daysAgo(1),
